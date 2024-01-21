@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boilerplate Code</title>
+    <link rel="shortcut icon" href="./icon1.jpg" type="image/x-icon">
+    <style>
+        @font-face {
+            font-family: Digital;
+            src: url("./digital-7.regular.ttf");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("./stadium.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+
+        #main{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        #scoreboard {
+            border: 5px solid white;
+            width: 40%;
+            height: 300px;
+            background:#CEF7F7;
+            border-radius: 5px;
+            padding: 0 10px;
+        }
+
+        #Heading {
+            text-align: center;
+            font-size: 2.5vw;
+            border-bottom: 2px solid #777;
+        }
+
+
+        .Score{
+            width: 100%;
+            height: 30%;
+            display: flex;
+            align-items: center;
+        }
+
+        .Score h1{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            height: 100%;
+            border-bottom: 1px solid gray;
+        }
+
+        .Score h1:nth-child(1){
+            border-right: 1px solid gray;
+        }
+
+
+        #btns{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        #btns button{
+            width: 8vw;
+            height: 6vh;
+            font-size: 1.5em;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            background: #1DB1F4;
+            color: white;
+            transition: scale 0.2s ease-in-out;
+        }
+
+        #btns button:hover{
+            scale:1.1;
+            border: 1px solid black;
+
+        }
+
+        #btns button:last-child{
+            background-color: rgb(250, 95, 95);
+        }
+
+
+        .Digital-text{
+            font-size: 1.5em;
+            font-family: Digital;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+
+
+    // Component for incresing runs
+    const RunIncrementBtn = ({ run, setRun, wicket }) => {
+        function handelIncrese2() {
+            typeof (wicket) !== "number" ? (alert("Game is over")) : (setRun(run + 2))
+        }
+        function handelIncrese4() {
+            typeof (wicket) !== "number" ? (alert("Game is over")) : (setRun(run + 4))
+        }
+        function handelIncrese6() {
+            typeof (wicket) !== "number" ? (alert("Game is over")) : (setRun(run + 6))
+        }
+
+        return (
+            <>
+                <button onClick={handelIncrese2}>+2</button><br />
+                <button onClick={handelIncrese4}>+4</button><br />
+                <button onClick={handelIncrese6}>+6</button><br />
+            </>
+        )
+    }
+
+    // Component for showing wicket button
+    const WicketIncrementBtn = ({ wicket, setWicket }) => {
+        function updateWicket() {
+            wicket < 10 ? (setWicket(wicket + 1)) : (setWicket("Game is over"))
+        }
+        return (
+            <>
+                <button onClick={updateWicket}>+ Wicket</button>
+            </>
+        )
+    }
+
+
+    // CricketScoreboard component
+    function CricketScoreboard() {
+        const [run, setRun] = React.useState(0)
+        const [wicket, setWicket] = React.useState(0)
+        return (
+            <div id="scoreboard">
+                <h1 id="Heading"><span className="Digital-text">SCOREBOARD</span> </h1>
+                <div className="Score">
+                    <h1>Total Runs: <span style={{color:"green"}} className="Digital-text">{run}</span> </h1>
+                    <h1>No of Wickets: <span style={{color:"red"}} className="Digital-text"> {wicket}</span> </h1>
+                </div>
+               <div id="btns">
+                <RunIncrementBtn run={run} setRun={setRun} wicket={wicket} />
+                <WicketIncrementBtn wicket={wicket} setWicket={setWicket} />
+                </div>
+            </div>
+        )
+    }
+
+
+    // Main component
+    function App() {
+        return (
+            <>
+                <div id="main"><CricketScoreboard /></div>
+            </>
+        )
+    }
+
+
+    let rootElement = ReactDOM.createRoot(document.getElementById("root"))
+    rootElement.render(<App />)
+</script>
+
+</html>
